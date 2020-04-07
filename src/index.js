@@ -132,6 +132,9 @@ class KeyBoard {
   }
 
   writeTextArea(key) {
+    if (key === '&amp;') {
+      key = '&';
+    }
     this.textArea.setRangeText(key, this.textArea.selectionStart, this.textArea.selectionEnd, 'end');
     this.textArea.focus();
   }
@@ -265,6 +268,7 @@ class KeyBoard {
         case 'ArrowUp':
         case 'ArrowRight':
         case 'ArrowDown':
+        case 'Meta':
           this.keyAnimation(e.code);
           break;
         default:
@@ -272,6 +276,7 @@ class KeyBoard {
           this.writeTextArea(this.wrapper.querySelector(`button[data-key = ${e.code}]`).innerHTML);
           this.keyAnimation(e.code);
       }
+      console.log(e.key);
     }
     return null;
   }
@@ -282,6 +287,7 @@ class KeyBoard {
         case 'CapsLock':
           break;
         case 'Shift':
+          e.preventDefault();
           this.shiftEvent(e);
           this.keyAnimation(e.code);
           if (this.capsLockState) {
